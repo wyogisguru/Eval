@@ -9,45 +9,63 @@
 # Created:     20/11/2015
 # Copyright:   (c) cbrink 2015
 #-------------------------------------------------------------------------------
+import time
+# ------------------------------------------------------------------------------
 def read_file(file=None):
     txtFile = open(file,
                    'r')
     lines = txtFile.readlines()
 
-    # Create new list from lines that has removed all blank line items...
+    # Create new list from 'lines' that has removed all blank strings...
     newLines = [string for string in lines if string != '\n']
 
-    # Find value of 't'...
+    # Find what letter 't' is...
     for line in newLines:
 
         for char in line:
             if char == ',':
                 t = line.index(char) + 1
-                find_t_index(t, line)
+                find_t(t, line)
 # ------------------------------------------------------------------------------
-def find_t_index(t=None,
-                 string=None):
-    for char in string:
-        tIndexes = []
-        if char == string[t]:
-            tIndexes.append(string.index(char))
-            tIndex = tIndexes[-1]
-            print tIndex
+def find_t(t=None,
+           string=None):
+    S = string
+    tIndexes = []
+    for char in S:
+        if char == S[t]:
+            # Create list of occurences of t....
+            tIndexes.append(S.index(char))
         else:
             if char == ',':
                 break
+
+    # Pass 't' occurrences list to print function...
+    print_output(tIndexes)
+# ------------------------------------------------------------------------------
+def print_output(t_occurence=None):
+    # If no 't' was found print -1...
+    if len(t_occurence) == 0:
+        no_t = -1
+        print(no_t)
+    else:
+        if len(t_occurence) >= 1:
+            # Print right most occurence of 't' that is zero based...
+            rm_t = t_occurence[-1]
+            print(rm_t)
+
+    # Allow users to see printed output for 5 seconds...
+    time.sleep(5)
 #-------------------------------------------------------------------------------
 def main():
-##    path = str(input('Please provide full path to text file:'))
-##    if path.isdigit():
-##        print('Input cannot be just a number!'
-##              'Please run program again and input full path to text file!')
-##    else:
-##        read_file(path)
+    filePath = str(input("Input file path including quotes: "
+                         "(i.e.'C:\Temp\your_text_file.txt')"))
 
-    path = r'C:\Temp\rightmost_char.txt'
-    read_file(path)
-
+    if filePath.isdigit():
+        print('Input cannot be just a number! '
+              '(Please run program again and input full path to text file.)')
+        time.sleep(5)
+    else:
+        read_file(filePath)
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
     main()
