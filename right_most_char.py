@@ -9,23 +9,30 @@
 # Created:     20/11/2015
 # Copyright:   (c) cbrink 2015
 #-------------------------------------------------------------------------------
+import sys
 import time
+import traceback
 # ------------------------------------------------------------------------------
 def read_file(file=None):
-    txtFile = open(file,
-                   'r')
-    lines = txtFile.readlines()
+    try:
+        txtFile = open(file,
+                       'r')
+        lines = txtFile.readlines()
 
-    # Create new list from 'lines' that has removed all blank strings...
-    newLines = [string for string in lines if string != '\n']
+        # Create new list from 'lines' that has removed all blank strings...
+        newLines = [string for string in lines if string != '\n']
 
-    # Find what letter 't' is...
-    for line in newLines:
+        # Find what letter 't' is...
+        for line in newLines:
 
-        for char in line:
-            if char == ',':
-                t = line.index(char) + 1
-                find_t(t, line)
+            for char in line:
+                if char == ',':
+                    t = line.index(char) + 1
+                    find_t1(t, line)
+
+    except Exception, err:
+        print('print_exc():')
+        traceback.print_exc(file=sys.stdout)
 # ------------------------------------------------------------------------------
 def find_t(t=None,
            string=None):
@@ -54,11 +61,11 @@ def print_output(t_occurence=None):
             print(rm_t)
 
     # Allow users to see printed output for 5 seconds...
-    time.sleep(5)
 #-------------------------------------------------------------------------------
 def main():
-    filePath = str(input("Input file path including quotes: "
-                         "(i.e.'C:\Temp\your_text_file.txt')"))
+    filePath = str(input("Input file path including quotes and "
+                         "double backslashes: "
+                         "(i.e." r"'C:\\Temp\\your_text_file.txt')"))
 
     if filePath.isdigit():
         print('Input cannot be just a number! '
@@ -66,6 +73,7 @@ def main():
         time.sleep(5)
     else:
         read_file(filePath)
+        time.sleep(5)
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
     main()
