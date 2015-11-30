@@ -13,12 +13,8 @@ import sys
 import time
 import traceback
 # ------------------------------------------------------------------------------
-def read_file(file=None):
+def letter_t(lines=None):
     try:
-        txtFile = open(file,
-                       'r')
-        lines = txtFile.readlines()
-
         # Create new list from 'lines' that has removed all blank strings...
         newLines = [string for string in lines if string != '\n']
 
@@ -72,18 +68,17 @@ def print_output(t_occurence=None):
 #-------------------------------------------------------------------------------
 def main():
     try:
-        filePath = str(input("Input file path including quotes and "
-                             "double backslashes: "
-                             "(i.e." r"'C:\\Temp\\your_text_file.txt')"))
+        test_cases = open(sys.argv[1],
+                          'r')
 
-        if filePath.isdigit():
-            print('Input cannot be just a number! '
-                  '(Please run program again and input full '
-                  'path to text file.)')
-            time.sleep(5)
-        else:
-            read_file(filePath)
-            time.sleep(5)
+        lines = []
+        for test in test_cases:
+            lines.append(str(test))
+
+        letter_t(lines)
+
+        test_cases.close()
+        sys.exit(0)
 
     except Exception, err:
         print('print_exc():')
