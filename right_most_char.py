@@ -35,7 +35,8 @@ def find_t(t=None,
         S = string
         tIndexes = []
         for char in S:
-            if char == S[t]:
+            # Check for upppercase or lowercase of 't'...
+            if char.lower() == S[t].lower():
                 # Create list of occurences of t....
                 tIndexes.append(S.index(char))
             else:
